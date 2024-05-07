@@ -26,4 +26,8 @@ file_handler.setFormatter(formatter)
 infologger.addHandler(file_handler)
 
 if __name__ == "__main__" :
-     infologger.info('Testing logger')     
+     infologger.info('Testing logger')
+
+# -------- ERROR --------
+# ERROR: Can not execute `setup.py` since setuptools is not available in the build environment.
+# Sol: just uninstall & install setuptools. 
