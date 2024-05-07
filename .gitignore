@@ -87,3 +87,5 @@ secrets.yaml
 
 # Mypy cache
 .mypy_cache/
+
+figures

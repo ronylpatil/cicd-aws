@@ -34,3 +34,7 @@ train_model:
   random_state: 42
   min_samples_split: 60
   model_dir: /models
+
+hyperopt:
+  max_eval: 3
+  model_name: best_model
