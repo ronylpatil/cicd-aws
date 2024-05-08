@@ -1,7 +1,7 @@
 E2E CICD Pipeline
 ==============================
 
-Built End2End CI/CD Pipeline using GitHub Actions, Docker & Amazon ECR, and hosted it to AWS EC2.
+Built End2End CI/CD Pipeline using GitHub Actions, Docker, Amazon ECR, and hosted it to AWS EC2.
 
 [![cicd pipeline](https://github.com/ronylpatil/cicd-aws/actions/workflows/cicd.yaml/badge.svg)](https://github.com/ronylpatil/cicd-aws/actions/workflows/cicd.yaml)
 
