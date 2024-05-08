@@ -12,10 +12,12 @@ ENV PYTHONDONTWRITEBYTECODE = 1
 ENV PYTHONUNBUFFERED = 1
 
 WORKDIR /app
-COPY . /app
+COPY model.joblib /app/model.joblib
+COPY model_details.json /app/model_details.json
+COPY docker_requirements.txt /app/docker_requirements.txt
+COPY prod/docker_client.py /app/prod/docker_client.py
 
 # Install pip req
-COPY docker_requirements.txt .
 RUN pip install -r docker_requirements.txt 
 
 # Run the application
