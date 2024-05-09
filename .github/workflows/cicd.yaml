@@ -106,7 +106,7 @@ jobs:
   continuous-deployment:
     name: continuous deployment
     runs-on: self-hosted
-    needs: build-&-push-docker-image
+    needs: build-nd-push-docker-image
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4     # if getting some issues then must check latest version  
