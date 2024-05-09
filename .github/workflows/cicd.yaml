@@ -55,7 +55,7 @@ jobs:
       - name: Print Current Directory          # for debuging purpoer, u can remove it
         run: ls /home/runner/work/cicd-aws/cicd-aws
 
-  build-&-push-docker-image:  
+  build-nd-push-docker-image:  
     name: build & push img to ECR   
     needs: pull-latest-model      # previous stage must be successfully completed (job dependency)
     runs-on: ubuntu-latest
