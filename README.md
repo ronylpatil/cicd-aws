@@ -10,8 +10,6 @@ Built End2End CI/CD Pipeline using GitHub Actions, Docker, Amazon ECR, and hoste
   <img class="center" src = "https://github.com/ronylpatil/cicd-aws/blob/main/workflow/workflow.png" alt = "Drawing">
 </p>
 
-## Blogs
-
 ## Installation
 
 1. Clone the repository.
