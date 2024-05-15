@@ -95,7 +95,7 @@ jobs:
     steps:
       - name: pull latest image from docker hub
         run: |
-          docker image pull wineqcicdaws:latest
+          docker image pull ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
       
       - name: Delete Previous Container
         run: |
