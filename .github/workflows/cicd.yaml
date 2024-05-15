@@ -106,4 +106,4 @@ jobs:
 
       - name: Run Docker Image to Serve Users
         run: |
-          docker run -d -p 8081:8000 -ti --name awscicd ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
+          docker run -p 8080:8000 -ti --name awscicd ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
