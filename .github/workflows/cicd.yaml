@@ -97,6 +97,9 @@ jobs:
         run: |
           docker image pull ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
       
+      - name: Print docker images     # for debugging
+        run: docker images
+      
       - name: Delete Previous Container
         run: |
           docker rm -f awscicd || true
