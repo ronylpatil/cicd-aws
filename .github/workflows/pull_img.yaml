@@ -1,4 +1,4 @@
-name: pull latest prod model
+name: build docker img
 on:
   push:
     branches:
@@ -49,3 +49,35 @@ jobs:
 
       - name: Print Current Directory          # for debuging purpoer, u can remove it
         run: ls /home/runner/work/cicd-aws/cicd-aws
+
+  build-nd-push-docker-image:  
+    name: build & push img to dockerhub   
+    needs: pull-latest-model      # previous stage must be successfully completed (job dependency)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print Current Directory be-down       # for debug purpose
+        run: ls /home/runner/work/cicd-aws/cicd-aws
+
+      - name: Download Model Artifacts           # download the previously saved artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: model
+          path: /home/runner/work/cicd-aws/cicd-aws
+      
+      - name: Print Current Directory af-down     # for debugging
+        run: ls /home/runner/work/cicd-aws/cicd-aws
+
+      # push img to docker hub
+      - name: Build Docker Image    
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest .
+
+      - name: Log-in to Docker Hub    
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker Img     # push the previously built img to dockerhub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
