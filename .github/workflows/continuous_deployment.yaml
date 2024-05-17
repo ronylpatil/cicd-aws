@@ -9,20 +9,20 @@ on:
 jobs:
   continuous-deployment:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-      name: continuous deployment
-      runs-on: self-hosted
-      steps:
-        - name: pull latest image from docker hub
-          run: |
-            docker image pull ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
-        
-        - name: Print docker images     # for debugging
-          run: docker images
-        
-        - name: Delete Previous Container
-          run: |
-            docker rm -f awscicd || true
+    runs-on: self-hosted
+    name: continuous deployment
+    steps:
+      - name: pull latest image from docker hub
+        run: |
+          docker image pull ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
+      
+      - name: Print docker images     # for debugging
+        run: docker images
+      
+      - name: Delete Previous Container
+        run: |
+          docker rm -f awscicd || true
 
-        - name: Run Docker Image to Serve Users
-          run: |
-            docker run -d -p 8082:8000 -ti --name awscicd ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
+      - name: Run Docker Image to Serve Users
+        run: |
+          docker run -d -p 8082:8000 -ti --name awscicd ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
