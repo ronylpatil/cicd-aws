@@ -1,0 +1,30 @@
+
+name: continuous deployment
+on:
+  workflow_run:
+    workflows: ['build & push img']
+    types:
+      - completed
+
+jobs:
+  if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    continuous-deployment:
+      name: continuous deployment
+      runs-on: self-hosted
+      # runs-on: ubuntu-latest
+      needs: build-nd-push-docker-image
+      steps:
+        - name: pull latest image from docker hub
+          run: |
+            docker image pull ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest
+        
+        - name: Print docker images     # for debugging
+          run: docker images
+        
+        - name: Delete Previous Container
+          run: |
+            docker rm -f awscicd || true
+
+        - name: Run Docker Image to Serve Users
+          run: |
+            docker run -d -p 8082:8000 -ti --name awscicd ${{ secrets.DOCKER_USERNAME }}/wineqcicdaws:latest

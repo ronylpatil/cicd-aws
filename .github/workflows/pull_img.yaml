@@ -1,0 +1,51 @@
+name: pull latest prod model
+on:
+  push:
+    branches:
+      - main
+    paths:                # if any changes detected in below dir then runner'll trigger cicd pipeline
+      - ./src/**
+      - .github/**
+      - ./prod/**
+      - Dockerfile
+      - docker_requirements.txt
+  pull_request: 
+    branches:
+      - main
+
+jobs:
+  pull-latest-model:   
+    name: pull latest prod model         
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install Utilities     # install utilities required to fetch model from backend
+        run: |
+            python -m pip install --upgrade pip
+            if [ -f model_requirements.txt ]; then pip install -r model_requirements.txt; fi 
+
+      - name: Pull Latest Model From Mlflow   # below script will executed and fetch the prod model
+        run: |
+          python ./prod/mlflowdb.py ${{ secrets.TRACKING_URI }}
+      
+      - name: Upload Model Artifact            # save the artifacts so that we can utilise it in next stage     
+        uses: actions/upload-artifact@v2
+        with:
+          name: model
+          # in path give correct repository name as here "cicd-aws/cicd-aws" 
+          path: | 
+            /home/runner/work/cicd-aws/cicd-aws/model.joblib    
+            /home/runner/work/cicd-aws/cicd-aws/model_details.json
+
+      - name: Print Current Directory          # for debuging purpoer, u can remove it
+        run: ls /home/runner/work/cicd-aws/cicd-aws
