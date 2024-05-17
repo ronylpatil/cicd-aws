@@ -7,10 +7,10 @@ on:
       - completed
 
 jobs:
-  if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    build-nd-push-docker-image:  
+  
+  build-nd-push-docker-image:  
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
       name: build & push img to dockerhub   
-      needs: pull-latest-model      # previous stage must be successfully completed (job dependency)
       runs-on: ubuntu-latest
 
       steps:
